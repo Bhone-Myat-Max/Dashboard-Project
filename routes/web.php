@@ -85,4 +85,8 @@ Route::prefix('/backend')->group(function(){
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+    Route::post('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
+    Route::get('/users/{id}/detail', [UserController::class, 'detail'])->name('users.detail');
 });

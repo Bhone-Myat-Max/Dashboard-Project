@@ -48,10 +48,19 @@
                                         <span class="badge bg-danger">Inactive</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary" disabled>
-                                        <i class="bi bi-eye"></i> View
-                                    </button>
+                                <td class="d-flex">
+                                    <a href="{{ route('users.detail', ['id'=> $user->id])}}"  class="btn btn-sm btn-outline-secondary me-3">
+                                        View
+                                    </a>
+                                    <a href="{{ route('users.edit' , ['id'=> $user->id] )}}" class="btn btn-success btn-sm me-3">
+                                        Edit
+                                    </a>
+                                    {{-- Delete button --}}
+                                    <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+
                                 </td>
                             </tr>
                         @endforeach
