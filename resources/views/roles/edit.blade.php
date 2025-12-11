@@ -1,4 +1,5 @@
 {{-- {{dd($RoleModel)}} --}}
+{{-- {{dd($permission)}} --}}
 
 
 
@@ -33,7 +34,9 @@
         <div class="card-body">
             <form action="{{ route('roles.update', [$RoleModel->id]) }}" method="POST">
                 @csrf
-                  {{-- @method('PUT') --}}
+                    {{-- <input type="hidden" name="id" value="{{ $RoleModel->id }}"> --}}
+
+                {{-- @method('PUT') --}}
                 <div class="card-body">
                     <label for="name" class="form-input-label mb-2">Role Name:</label>
                     <input type="text" class="form-control" value="{{ $RoleModel->name }}" name="name" />
@@ -42,6 +45,34 @@
                             {{ $message }}
                         </div>
                     @enderror --}}
+                </div>
+
+                {{-- Permission --}}
+                <label class="form-label">Permissions <span class="text-muted">(Optional)</span></label>
+                <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;">
+                    @foreach ($permission as $permission_list)
+                        <div class="form-check mb-2">
+                            <input type="checkbox" name="permission[]" class="form-check-input" value="{{ $permission_list->id }}"
+                                {{ $RoleModel->permissions->contains($permission_list->id) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="">
+                                {{ $permission_list->name }}
+                            </label>
+                        </div>
+                    @endforeach
+
+
+                    {{-- @forelse ($permissions as $permission)
+                        <div class="form-check mb-2">
+
+                            <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                {{ $permission->name }}
+                            </label>
+                        </div>
+                    @empty
+                        <p class="text-muted mb-0">No permissions available.
+                            <a href="{{ route('permissions.create') }}">Create a permission first</a>.
+                        </p>
+                    @endforelse --}}
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-outline-primary btn-sm me-2" type="submit">Update</button>

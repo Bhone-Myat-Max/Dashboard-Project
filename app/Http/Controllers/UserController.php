@@ -81,7 +81,7 @@ class UserController extends Controller
      # Update function
      public function update(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
         $UserModel = $this->UserRepository->show($request->id);
         $UserModel->update([
             'name'=> $request->name,
@@ -97,6 +97,9 @@ class UserController extends Controller
          if (isset($UserModel['password'])) {
             $UserModel['password'] = bcrypt($UserModel['password']);
         }
+
+        $role = Role::find($request->role);   // Get Role Model
+        $UserModel->syncRoles([$role]);
         return redirect()->route('users.index');
     }
 

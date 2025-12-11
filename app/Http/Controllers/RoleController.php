@@ -17,7 +17,7 @@ class RoleController extends Controller
     public function edit($id){
         $permission=Permission::get();
         $RoleModel=Role::with('permissions')->find($id);
-        return view('roles.edit', compact('RoleModel'));
+        return view('roles.edit', compact('RoleModel','permission'));
     }
 
     #create
@@ -49,13 +49,28 @@ class RoleController extends Controller
     }
 
     # update
-      public function update(Request $request){
+      public function update(Request $request, $id){
+
+        dd($request->all());
 
         $RoleModel=Role::find($request->id);
         $RoleModel->update([
-            'name'=>$request->name
-
+            'name'=>$request->name,
         ]);
+
+        $permissions = $request->permission ?? [];
+        $RoleModel->syncPermissions($permissions);
+
+        // $role = Role::find($id);
+        // // dd($role);
+        // $role->update(['name' => $request['name']]);
+
+        // if (isset($request['permissions'])) {
+        //     $permissions = Permission::whereIn('id', $request['permissions'])->get();
+        //     $role->syncPermissions($permissions);
+        // }else{
+        //     $role->syncPermissions([]);
+        // }
 
         return redirect()->route('roles.index');
     }

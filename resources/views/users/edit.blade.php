@@ -20,6 +20,8 @@
             </div>
             <form action="{{ route('users.update', ['id' => $users->id]) }}" method="POST">
                 @csrf
+
+
                 <div class="card-body">
                     <label for="name" class="form-label">Name :</label>
                     <input type="text" name="name" placeholder="Enter Product Name" value="{{ $users->name }}"
