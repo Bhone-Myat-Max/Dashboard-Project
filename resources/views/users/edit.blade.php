@@ -1,4 +1,5 @@
 {{-- {{dd($users)}} --}}
+{{-- {{dd($roles)}} --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,11 +18,11 @@
             <div class="card-header">
                 Edit User
             </div>
-            <form action="{{ route('users.update', ['id'=>$users->id]) }}" method="POST">
+            <form action="{{ route('users.update', ['id' => $users->id]) }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <label for="name" class="form-label">Name :</label>
-                    <input type="text" name="name" placeholder="Enter Product Name" value="{{$users->name}}"
+                    <input type="text" name="name" placeholder="Enter Product Name" value="{{ $users->name }}"
                         class="form-control mb-2 @error('name') is-invalid @enderror">
                     @error('name')
                         <div class="invalid-feedback d-block">
@@ -33,8 +34,8 @@
                     <label for="email" class="form-label @error('email') is-invalid @enderror">
                         Email :
                     </label>
-                    <input type="text" name="email" placeholder="Enter Your Email"
-                        class="form-control mb-2" value="{{$users->email}}">
+                    <input type="text" name="email" placeholder="Enter Your Email" class="form-control mb-2"
+                        value="{{ $users->email }}">
                     @error('email')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -44,7 +45,8 @@
                 <div class="card-body">
                     <label for="password" class="form-label">Password :</label>
                     <input type="password" name="password" placeholder="Enter Your Password"
-                        class="form-control mb-2 @error('description') is-invalid @enderror" value="{{$users->password}}" >
+                        class="form-control mb-2 @error('description') is-invalid @enderror"
+                        value="{{ $users->password }}">
                     @error('price')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -56,8 +58,8 @@
                     <label for="gender" class="form-label @error('gender') is-invalid @enderror">
                         Gender :
                     </label>
-                    <input type="text" name="gender" placeholder="Enter Your Gender"
-                        class="form-control mb-2" value="{{$users->gender}}">
+                    <input type="text" name="gender" placeholder="Enter Your Gender" class="form-control mb-2"
+                        value="{{ $users->gender }}">
                     @error('gender')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -68,8 +70,8 @@
                     <label for="phone" class="form-label @error('phone') is-invalid @enderror">
                         Phone :
                     </label>
-                    <input type="text" name="phone" placeholder="Enter Your Phone"
-                        class="form-control mb-2" value="{{$users->phone}}">
+                    <input type="text" name="phone" placeholder="Enter Your Phone" class="form-control mb-2"
+                        value="{{ $users->phone }}">
                     @error('phone')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -80,8 +82,8 @@
                     <label for="address" class="form-label @error('address') is-invalid @enderror">
                         Address :
                     </label>
-                    <input type="text" name="address" placeholder="Enter Your Address"
-                        class="form-control mb-2" value="{{$users->address}}">
+                    <input type="text" name="address" placeholder="Enter Your Address" class="form-control mb-2"
+                        value="{{ $users->address }}">
                     @error('address')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -89,8 +91,26 @@
                     @enderror
                 </div>
                 <div class="card-body">
+                    <label for="address" class="form-label @error('address') is-invalid @enderror">
+                        Role :
+                    </label>
+
+                    @php
+                        $userRoleId = $users->roles->first()->id ?? null;
+                    @endphp
+
+                    <select name="role">
+                        @foreach ($roles as $rolelist)
+                            <option value="{{ $rolelist->id }}" {{ $rolelist->id == $userRoleId ? 'selected' : '' }}>
+                                {{ $rolelist->name }}
+                            </option>
+                        @endforeach
+                    </select><br>
+                </div>
+                <div class="card-body">
                     <label for="" class="form-label me-3">Active or Expired:</label>
-                    <input type="checkbox" class="form-check-input mb-2" name="status" role="switch" value="{{$users->status}}" {{$users->status == 1 ? 'checked' :""}}>
+                    <input type="checkbox" class="form-check-input mb-2" name="status" role="switch"
+                        value="{{ $users->status }}" {{ $users->status == 1 ? 'checked' : '' }}>
 
                 </div>
                 <div class="card-footer">

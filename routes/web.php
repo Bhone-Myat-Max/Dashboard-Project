@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -89,4 +91,24 @@ Route::prefix('/backend')->group(function(){
     Route::post('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
     Route::get('/users/{id}/detail', [UserController::class, 'detail'])->name('users.detail');
+
+
+    //Role
+
+    Route::get('/role',[RoleController::class, 'index'])->name('roles.index');
+    Route::get('/role/{id}/edit',[RoleController::class, 'edit'])->name('roles.edit');
+    Route::post('/role/{id}/update',[RoleController::class, 'update'])->name('roles.update');
+    Route::post('/role/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/role/store', [RoleController::class, 'store'])->name('roles.store');
+
+    //Permission
+
+    Route::get('/permission',[PermissionController::class, 'index'])->name('permissions.index');
+    Route::get('/permission/{id}/edit',[PermissionController::class, 'edit'])->name('permissions.edit');
+    Route::post('/permission/{id}/update',[PermissionController::class, 'update'])->name('permissions.update');
+    Route::post('/permission/{id}/delete', [PermissionController::class, 'delete'])->name('permissions.delete');
+    Route::get('/permission/create', [PermissionController::class, 'create'])->name('permission.create');
+    Route::post('/permission/store', [PermissionController::class, 'store'])->name('permissions.store');
+
 });

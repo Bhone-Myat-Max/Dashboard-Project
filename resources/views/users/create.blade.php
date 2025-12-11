@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    {{-- {{dd($categories)}} --}}
+    {{-- {{dd($roles)}} --}}
     <div class="container">
         <div class="card mt-4">
             <div class="card-header">
@@ -33,8 +33,7 @@
                     <label for="email" class="form-label @error('email') is-invalid @enderror">
                         Email :
                     </label>
-                    <input type="text" name="email" placeholder="Enter Your Email"
-                        class="form-control mb-2">
+                    <input type="text" name="email" placeholder="Enter Your Email" class="form-control mb-2">
                     @error('email')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -51,7 +50,7 @@
                         </div>
                     @enderror
                 </div>
-                 <div class="card-body">
+                <div class="card-body">
                     <label for="password_confirmation" class="form-label">Password :</label>
                     <input type="password" name="password_confirmation" placeholder="Enter Your Contirm password"
                         class="form-control mb-2 @error('description') is-invalid @enderror">
@@ -75,8 +74,7 @@
                     <label for="gender" class="form-label @error('gender') is-invalid @enderror">
                         Gender :
                     </label>
-                    <input type="text" name="gender" placeholder="Enter Your Gender"
-                        class="form-control mb-2">
+                    <input type="text" name="gender" placeholder="Enter Your Gender" class="form-control mb-2">
                     @error('gender')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -87,8 +85,7 @@
                     <label for="phone" class="form-label @error('phone') is-invalid @enderror">
                         Phone :
                     </label>
-                    <input type="text" name="phone" placeholder="Enter Your Phone"
-                        class="form-control mb-2">
+                    <input type="text" name="phone" placeholder="Enter Your Phone" class="form-control mb-2">
                     @error('phone')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -99,13 +96,33 @@
                     <label for="address" class="form-label @error('address') is-invalid @enderror">
                         Address :
                     </label>
-                    <input type="text" name="address" placeholder="Enter Your Address"
-                        class="form-control mb-2">
+                    <input type="text" name="address" placeholder="Enter Your Address" class="form-control mb-2">
                     @error('address')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
                         </div>
                     @enderror
+                </div>
+
+                <div class="card-body">
+                    <label for="address" class="form-label @error('role') is-invalid @enderror">
+                        Roles :
+                    </label>
+                    <select name="role" id="role">
+                        @foreach ($roles as $rolelist)
+                            {{-- <option value="{{ $rolelist->id }}" {{ old('role') == $rolelist->id ? 'selected' : '' }}>
+                                {{ $rolelist->name }}
+                            </option> --}}
+                            <option value="{{ $rolelist->id }}">{{ $rolelist->name }}</option>
+                        @endforeach
+                    </select>
+                    {{-- <input type="text" name="address"
+                        class="form-control mb-2">
+                    @error('role')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror --}}
                 </div>
                 <div class="card-body">
                     <label for="" class="form-label me-3">Active or Expired:</label>

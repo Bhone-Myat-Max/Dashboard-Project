@@ -195,10 +195,13 @@
         <ul class="sidebar-menu">
             <li class="menu-title">Main Menu</li>
             <li>
-                <a href="{{ route('dashboard.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
-                    <i class="bi bi-speedometer2"></i>
-                    <span>Dashboard</span>
-                </a>
+                @can('dashboard')
+                    <a href="{{ route('dashboard.index') }}"
+                        class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                @endcan
             </li>
             <li>
                 <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.*') ? 'active' : '' }}">
@@ -207,7 +210,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('categories.index') }}" class="{{ request()->routeIs('categories.*') ? 'active' : '' }}">
+                <a href="{{ route('categories.index') }}"
+                    class="{{ request()->routeIs('categories.*') ? 'active' : '' }}">
                     <i class="bi bi-tags"></i>
                     <span>Categories</span>
                 </a>
@@ -219,10 +223,25 @@
                 </a>
             </li>
             <li class="menu-title">Account</li>
+             <li>
+                <a href="{{ route('roles.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i>
+                    <span>Roles</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('permissions.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i>
+                    <span>Permission</span>
+                </a>
+            </li>
+
             <li>
                 <form method="POST" action="{{ route('logout') }}" id="logout-form">
                     @csrf
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-danger">
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="text-danger">
                         <i class="bi bi-box-arrow-right"></i>
                         <span>Logout</span>
                     </a>
@@ -246,11 +265,8 @@
             <div class="d-flex align-items-center gap-3">
                 @auth
                     <div class="dropdown">
-                        <button class="btn btn-link text-decoration-none dropdown-toggle d-flex align-items-center gap-2" 
-                                type="button" 
-                                id="userDropdown" 
-                                data-bs-toggle="dropdown" 
-                                aria-expanded="false">
+                        <button class="btn btn-link text-decoration-none dropdown-toggle d-flex align-items-center gap-2"
+                            type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                             <div class="text-start d-none d-md-block">
                                 <div class="fw-bold">{{ Auth::user()->name }}</div>
@@ -263,7 +279,9 @@
                                     <i class="bi bi-people me-2"></i> Manage Users
                                 </a>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -321,4 +339,3 @@
 </body>
 
 </html>
-

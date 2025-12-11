@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Spatie\Permission\Models\Role;
 use App\Repositories\User\UserRepositoryInterface;
 
 class UserController extends Controller
@@ -27,7 +28,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('users.create');
+        $roles = Role::get();
+        return view('users.create', compact('roles'));
     }
 
     public function store(UserRequest $request)
@@ -50,7 +52,18 @@ class UserController extends Controller
             $validatedData['password'] = bcrypt($validatedData['password']);
         }
 
-        $this->UserRepository-> store($validatedData);
+        $user = $this->UserRepository-> store($validatedData);
+        //  if ($roleId) {
+        //     $role = Role::find($roleId);
+        //     if ($role) {
+        //         $user->assignRole($role);
+        //     }
+        // }
+
+             $role = Role::find($request->role);
+            $user->assignRole($role);
+
+
 
         return redirect()->route('users.index');
 
@@ -58,16 +71,17 @@ class UserController extends Controller
 
     # edit function
      public function edit($id){
+        $roles = Role::get();
         $users = $this->UserRepository->show($id);
 
-        return view('users.edit', compact('users'));
+        return view('users.edit', compact('users', 'roles'));
      }
 
 
      # Update function
      public function update(Request $request){
 
-        // dd($request->all());
+        dd($request->all());
         $UserModel = $this->UserRepository->show($request->id);
         $UserModel->update([
             'name'=> $request->name,
@@ -76,6 +90,7 @@ class UserController extends Controller
             'gender'=> $request->gender,
             'phone'=> $request->phone,
             'address'=> $request->address,
+            // 'role'=> $request->role,
             'status'=> $request->has('status') ? true : false,
         ]);
 
@@ -96,7 +111,7 @@ class UserController extends Controller
 
     # Show function
      public function detail($id){
-        
+
         $users = $this->UserRepository->show($id);
 
         return view('users.show', compact('users'));

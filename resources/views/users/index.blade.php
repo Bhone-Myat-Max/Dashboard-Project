@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-
+{{-- {{dd($users)}} --}}
 @section('title', 'Users')
 @section('page-title', 'Users')
 
@@ -27,6 +27,7 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
+                            <th>Role</th>
                             <th>Gender</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -40,6 +41,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone ?? '-' }}</td>
                                 <td>{{ $user->address ?? '-' }}</td>
+                                <td>{{ $user->roles->first() ? $user->roles->first()->name : '-' }}</td>
                                 <td>{{ $user->gender ?? '-' }}</td>
                                 <td>
                                     @if ($user->status === 1)
