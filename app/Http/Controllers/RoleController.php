@@ -49,17 +49,45 @@ class RoleController extends Controller
     }
 
     # update
-      public function update(Request $request, $id){
 
-        dd($request->all());
 
-        $RoleModel=Role::find($request->id);
+    public function update(Request $request, $id)
+
+    {
+
+        $Validata= $request->validate([
+                'name' => 'required',
+            ]);
+
+        $RoleModel = Role::findOrFail($id);
+
+        // update role name
         $RoleModel->update([
-            'name'=>$request->name,
+            'name' => $request->name,
         ]);
 
-        $permissions = $request->permission ?? [];
+        // get permission IDs from form
+        $permIDs = $request->permission ?? [];
+        // convert IDs to permission models
+        $permissions = Permission::whereIn('id', $permIDs)->get();
+        // sync permissions
         $RoleModel->syncPermissions($permissions);
+
+        return redirect()->route('roles.index');
+    }
+    //   public function update(Request $request, $id){
+
+
+
+        // dd($request->all());
+
+        // $RoleModel=Role::find($request->id);
+        // $RoleModel->update([
+        //     'name'=>$request->name,
+        // ]);
+
+        // $permissions = $request->permission ?? [];
+        // $RoleModel->syncPermissions($permissions);
 
         // $role = Role::find($id);
         // // dd($role);
@@ -72,8 +100,8 @@ class RoleController extends Controller
         //     $role->syncPermissions([]);
         // }
 
-        return redirect()->route('roles.index');
-    }
+    //     return redirect()->route('roles.index');
+    // }
 
     # delete
     public function delete($id){
