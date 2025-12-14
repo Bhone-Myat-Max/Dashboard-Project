@@ -30,8 +30,6 @@ class RoleController extends Controller
 
      public function store(Request $request){
 
-        // dd($request->all());
-
         $Validata= $request->validate([
             'name' => 'required',
 
