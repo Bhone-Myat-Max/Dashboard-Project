@@ -44,7 +44,7 @@
             </div>
     {{-- @if (count($products) > 0) --}}
 
-            @can('productCreate')
+            @can('productCreates')
                 <a href="{{ route('products.create') }}" class="btn btn-success">
                     <i class="bi bi-plus-circle"></i> Create Product
                 </a>

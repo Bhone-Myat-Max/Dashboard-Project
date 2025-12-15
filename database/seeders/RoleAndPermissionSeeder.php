@@ -25,7 +25,6 @@ class RoleAndPermissionSeeder extends Seeder
 
         $admin->givePermissionTo([
             $dashboard,
-
             $productList,
             $productCreate,
         ]);

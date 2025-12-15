@@ -16,17 +16,18 @@ class PermissionController extends Controller
 
     public function edit($id){
          $PermissionModel=Permission::find($id);
-        return view('roles.edit', compact('PermissionModel'));
+        return view('permissions.edit', compact('PermissionModel'));
     }
 
    public function update(Request $request){
 
+    // dd($request->all());
          $Validata= $request->validate([
             'name' => 'required',
 
         ]);
 
-        $PermissionModel=Permission::find($Validata->id);
+        $PermissionModel=Permission::find($request->id);
         $PermissionModel->update([
             'name'=>$request->name
 
