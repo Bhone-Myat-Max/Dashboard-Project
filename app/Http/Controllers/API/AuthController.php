@@ -14,7 +14,7 @@ class AuthController extends BaseController
     public function login(Request $request)
 
    {
-    dd($request->all());
+    // dd($request->all());
      try {
         $credentials = $request->only(['email', 'password']);
         if (!JWTAuth::attempt($credentials)) {
