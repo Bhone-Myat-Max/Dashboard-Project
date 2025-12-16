@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\RoleController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\PermissionController;
@@ -38,4 +39,7 @@ Route::apiResource('/permissions', PermissionController::class);
 
 
 Route::apiResource('/role', RoleController::class);
+
+#User
+Route::apiResource('/user', UserController::class);
 

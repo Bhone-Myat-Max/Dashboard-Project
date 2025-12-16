@@ -22,6 +22,7 @@ class ProductController extends BaseController
     #get
     public function index(){
         $products = $this->productRepository->index();
+        // dd($products);
         $result = ProductResource::collection($products);
         //  dd($result);
         return $this->success($result, "Successfully Product Data get", 200);

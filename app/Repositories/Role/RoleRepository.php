@@ -13,12 +13,12 @@ class RoleRepository implements RoleRepositoryInterface
     }
 
     // {
-    // public function store($data)
-    //     return Product::create($data);
-    // }
+    public function store($data){
+        return Role::Create($data);
+    }
 
     public function show($id)
     {
-        return Product::find($id);
+        return Role::find($id);
     }
 }
