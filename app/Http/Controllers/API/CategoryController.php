@@ -8,14 +8,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends BaseController
 {
 
+    // protected $categoryRepository;
+    // public function __construct(CategoryRepositoryInterface $categoryRepository)
+    // {
+    //     $this->categoryRepository  =  $categoryRepository;
+    // }
+
+    protected $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $categoryRepository){
+        $this->categoryRepository = $categoryRepository;
+    }
+
+
     #get
     public function index(){
 
-        $categories=Category::get();
+        $categories=$this->categoryRepository->index();
         $result = CategoryResource::collection($categories);
 
         return $this->success($result, 'Category data success', 200);
@@ -23,7 +36,7 @@ class CategoryController extends BaseController
 
     #show
     public function show($id){
-        $categories=Category::find($id);
+        $categories=$this->categoryRepository->show($id);
         $result = new CategoryResource($categories);
         return $this->success($categories, 'Category show success', 200);
     }
@@ -31,7 +44,7 @@ class CategoryController extends BaseController
     #store
      public function store(Request $request)
     {
-        // dd($request->all());
+
 
         $validation = Validator::make($request->all(), [
             'name' => 'required|string',
@@ -49,7 +62,7 @@ class CategoryController extends BaseController
             $request->image->move(public_path('categoryImages'), $imageName);
         }
 
-        $category = Category::create([
+            $category =$this->categoryRepository->store([
             'name' => $request->name,
             'image' => $imageName,
 
@@ -63,7 +76,7 @@ class CategoryController extends BaseController
     # update
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
+        $category =$this->categoryRepository->show($id);
 
         if (!$category) {
             return $this->error("Category not found", [], 404);
@@ -98,7 +111,7 @@ class CategoryController extends BaseController
      #Delete
      public function delete($id){
         // dd('here');
-        $category = Category::find($id);
+        $category =$this->categoryRepository->show($id);
         if (!$category) {
             return $this->error("Category not found to delete", [], 404);
         }
